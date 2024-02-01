@@ -1,0 +1,5 @@
+Alex Korp,3000
+Nikita Borisenko,2000
+Sitarama Raju,3000
+Dolgiy Alex,1500
+Small Egor,500
