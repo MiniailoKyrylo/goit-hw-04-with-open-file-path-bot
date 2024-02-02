@@ -1,6 +1,7 @@
 from pathlib import Path
 from colorama import Fore
 import sys
+import os
 
 # Открывает и читает содержимое файла.
 def open_read_file(path):
@@ -141,23 +142,26 @@ def read_folder(folder  = 'task_1_2_3', level = 0):
     Ничего
     """
 
-    path = Path(folder)  # Преобразует путь к объекту Path
+    path = Path(os.path.join(os.getcwd(), folder))  # Преобразует путь к объекту Path через модуль os
     
     if path.exists():  # Проверяет существование пути
         print(path.name) if level == 0 else None  # Выводит имя папки, если это корневая папка
         if path.is_dir():  # Проверяет, является ли объект папкой
-            items = path.iterdir()  # Получает список элементов в папке
-            for item in items:
-                color_print(item.name, level)  # Выводит имя элемента с учетом уровня вложенности
-                if item.is_dir():
-                    level += 1  # Увеличивает уровень вложенности для следующей итерации
-                    read_folder(item, level)  # Рекурсивно вызывает функцию для каждой подпапки
-                    level -= 1  # Возвращается на один уровень вложенности для корректного вывода
+            read_dir(path, level)    
         else:
             print(f'{path} is a file', level)  # Выводит информацию о файле
     else:
         print(f'{path.absolute()} is not exist')  # Выводит сообщение об ошибке, если путь не существует
 
+def read_dir(path, level):
+    items = path.iterdir()  # Получает список элементов в папке
+    for item in items:
+        color_print(item.name, level)  # Выводит имя элемента с учетом уровня вложенности
+        if item.is_dir():
+            level += 1  # Увеличивает уровень вложенности для следующей итерации
+            read_folder(item, level)  # Рекурсивно вызывает функцию для каждой подпапки
+            level -= 1  # Возвращается на один уровень вложенности для корректного вывода
+
 # Тест к заданию - 3
-# read_folder(r'D:\basic\python-course-go-it')
-# read_folder()
+# read_folder(r'D:\Work_Python\PythonGoIT\goit-hw-04-with-open-file-path-bot')
+# # read_folder()
